@@ -3,7 +3,7 @@ class FyberApi::OffersResponse
 
   delegate :success?, to: :response
 
-  def initialize(response,client)
+  def initialize(response, client)
     @response = response
     @client = client
     check_response_integrity
@@ -18,7 +18,7 @@ class FyberApi::OffersResponse
     response['offers']
   end
 
-  def has_offers?
+  def offers?
     code == 'OK'
   end
 
@@ -29,7 +29,7 @@ class FyberApi::OffersResponse
   private
 
   def check_response_integrity
-    signature = response.headers["x-sponsorpay-response-signature"]
+    signature = response.headers['x-sponsorpay-response-signature']
     verification = Digest::SHA1.hexdigest(response.body + client.api_key)
     if signature != verification
       raise FyberApi::ResponseSignatureIsNotValid, 'Response signature header didn\'t match'

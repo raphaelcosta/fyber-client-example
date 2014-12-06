@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe FyberApi::Client do
-  describe '#initialize' do
+  describe '.initialize' do
     context 'when fyber api key is not set application secrets' do
       before { Rails.application.secrets.fyber_api_key = nil }
       it { expect{ FyberApi::Client.new }.to raise_error(FyberApi::MissingAPIKey) }

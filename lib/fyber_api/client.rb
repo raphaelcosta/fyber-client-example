@@ -1,7 +1,7 @@
 class FyberApi::Client
   include HTTParty
   base_uri 'http://api.sponsorpay.com/feed/v1/'
-  headers "Accept-encoding" => 'gzip'
+  headers 'Accept-encoding' => 'gzip'
 
   def initialize(api_key=nil)
     @api_key = api_key
@@ -26,7 +26,7 @@ class FyberApi::Client
   private
 
   def generate_hashkey(options)
-    ordered_options = Hash[options.sort_by {|k,v| k }]
+    ordered_options = Hash[options.sort_by { |k,v| k }]
     query_string = ordered_options.to_query
     query_string += "&#{api_key}"
     Digest::SHA1.hexdigest(query_string)
