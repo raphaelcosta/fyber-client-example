@@ -9,14 +9,12 @@ class FyberApi::Client
   end
 
   # http://developer.fyber.com/content/ios/offer-wall/offer-api/
-  def fetch_offers(uid, pub0 = nil, page = '1', options = {})
+  def fetch_offers(options = {})
     options.reverse_merge! default_options
-    options.reverse_merge! uid: uid, pub0: pub0, page: page
-
     query = options.reverse_merge hashkey: generate_hashkey(options)
 
     response = self.class.get('/offers.json', query: query)
-    OffersResponse.new(response, self)
+    FyberApi::OffersResponse.new(response, self)
   end
 
   def api_key

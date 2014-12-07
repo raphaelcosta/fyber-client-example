@@ -4,6 +4,8 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'vcr'
+
 require 'simplecov'
 SimpleCov.start
 
@@ -21,6 +23,12 @@ SimpleCov.start
 # require only the support files necessary.
 #
 # Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+#
+VCR.configure do |c|
+  c.cassette_library_dir = 'fixtures/vcr_cassettes'
+  c.hook_into :webmock # or :fakeweb
+  c.default_cassette_options = { record: :once, match_requests_on: [:method, :host]}
+end
 
 RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers

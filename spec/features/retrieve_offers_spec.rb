@@ -11,31 +11,37 @@ feature 'Retrieve offers', %q{
   end
 
   scenario 'when uid field is empty' do
-    fill_in 'page', with: 'campaign1'
+    fill_in 'pub0', with: 'campaign1'
     fill_in 'page', with: '1'
     click_button 'Get offers'
 
-    expect(page).to have_text('UID is required')
-  end
-
-  scenario "when don't return offers" do
-    fill_in 'uid', with: 'user1'
-    fill_in 'page', with: 'campaign1'
-    fill_in 'page', with: '1'
-    click_button 'Get offers'
-
-    within('.offer') do
-      expect(page.find('.title')).to have_text('Offer Title')
-      expect(page.find('.payout')).to have_text('Offer Payout')
-      expect(page.find('.thumbnail')).to have_text('Offer Thumbnail')
-    end
+    expect(page).to have_text('UID field is required')
   end
 
   scenario "when return offers" do
+    fill_in 'uid', with: 'user1'
+    fill_in 'pub0', with: 'campaign1'
+    fill_in 'page', with: '1'
+
+    VCR.use_cassette('offers_present') do
+      click_button 'Get offers'
+    end
+
+    within('.offer') do
+      expect(page.find('.title')).to have_text('Tap  Fish')
+      expect(page.find('.payout')).to have_text('90')
+      expect(page.find('.thumbnail')).to have_text('http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png')
+    end
+  end
+
+  scenario "when don't return offers" do
     fill_in 'uid', with: 'user2'
     fill_in 'page', with: ''
     fill_in 'page', with: ''
-    click_button 'Get offers'
+
+    VCR.use_cassette('offers_empty') do
+      click_button 'Get offers'
+    end
 
     within('.no_offers') do
       expect(page).to have_text('No offers')
