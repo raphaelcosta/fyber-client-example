@@ -36,7 +36,7 @@ feature 'Retrieve offers', %q{
 
   scenario "when don't return offers" do
     fill_in 'uid', with: 'user2'
-    fill_in 'page', with: ''
+    fill_in 'pub0', with: ''
     fill_in 'page', with: ''
 
     VCR.use_cassette('offers_empty') do

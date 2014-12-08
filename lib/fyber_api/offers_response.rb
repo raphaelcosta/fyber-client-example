@@ -32,14 +32,11 @@ class FyberApi::OffersResponse
     signature = response.headers['x-sponsorpay-response-signature']
     verification = Digest::SHA1.hexdigest(response.body + client.api_key)
     if signature != verification
-      binding.pry
       raise FyberApi::ResponseSignatureIsNotValid, 'Response signature header didn\'t match'
     end
   end
 
   def check_if_response_was_successfull
-    unless response.success?
-      raise FyberApi::ResponseNotSuccessfull, "#{code}: #{message}"
-    end
+    raise FyberApi::ResponseNotSuccessfull, "#{code}: #{message}" unless success?
   end
 end
