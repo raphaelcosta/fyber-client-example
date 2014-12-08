@@ -30,7 +30,7 @@ feature 'Retrieve offers', %q{
     within('.offer') do
       expect(page.find('.title')).to have_text('Tap  Fish')
       expect(page.find('.payout')).to have_text('90')
-      expect(page.find('.thumbnail')).to have_text('http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_175.png')
+      expect(page.find('.thumbnail')).to have_text('http://cdn.sponsorpay.com/assets/1808/icon175x175-2_square_60.png') 
     end
   end
 

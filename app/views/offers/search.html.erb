@@ -2,11 +2,7 @@
 
 <% if @offers.present? %>
   <% @offers.each do |o| %>
-    <div class="offer">
-      <div class="title"><%= o['title'] %></div>
-      <div class="payout"><%= o['payout'] %></div>
-      <div class="thumbnail"><%= o['thumbnail']['hires'] %></div>
-    </div>
+    <%= render 'offer', offer: o %>
   <% end %>
 <% else %>
   <div class="no_offers">
