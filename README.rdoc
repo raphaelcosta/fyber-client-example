@@ -2,6 +2,6 @@
 
 Simple Rails app to demontrate use of Fyber offers api endpoint.
 
-= Tests
+=== Tests
 
 This app have integration tests and some unit tests of API classes, using RSpec and VCR to mock requests.
